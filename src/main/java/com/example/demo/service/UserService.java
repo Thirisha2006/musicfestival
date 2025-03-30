@@ -1,4 +1,4 @@
-package com.example.demo.service;
+/*package com.example.demo.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +46,55 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
-    public List<User> getUsersByRole(String role) {
+    public List<User> getUsersByRole(String role)
+     {
         return userRepository.findUsersByRole(role);
+    }
+}
+*/
+package com.example.demo.service;
+
+import com.example.demo.entity.Ticket;
+import com.example.demo.entity.User;
+import com.example.demo.repository.TicketRepository;
+import com.example.demo.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserService {
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public User updateUser(Long id, User updatedUser) {
+        return userRepository.findById(id).map(user -> {
+            user.setName(updatedUser.getName());
+            user.setEmail(updatedUser.getEmail());
+            user.setPassword(updatedUser.getPassword());
+            user.setPhoneNumber(updatedUser.getPhoneNumber());
+            user.setUserRole(updatedUser.getUserRole());
+            user.setSocialMediaLinks(updatedUser.getSocialMediaLinks());
+            user.setPreferences(updatedUser.getPreferences());
+            return userRepository.save(user);
+        }).orElse(null);
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }

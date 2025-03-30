@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+/*package com.example.demo.controller;
 
 import java.util.List;
 
@@ -64,4 +64,45 @@ public List<Performance> sortByPerformance() {
     return performanceService.sortByPerformance();
 }
 
+}*/
+package com.example.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import com.example.demo.entity.Performance;
+import com.example.demo.service.PerformanceService;
+
+@RestController
+@RequestMapping("/performances")
+public class PerformanceController {
+    @Autowired
+    private PerformanceService performanceService;
+
+    @GetMapping
+    public List<Performance> getAllPerformances() {
+        return performanceService.getAllPerformances();
+    }
+
+    @GetMapping("/{id}")
+    public Performance getPerformanceById(@PathVariable Long id) {
+        return performanceService.getPerformanceById(id);
+    }
+
+    @PostMapping("/{artistId}")
+    public Performance createPerformance(@RequestBody Performance performance, @PathVariable Long artistId) {
+        return performanceService.createPerformance(performance, artistId);
+    }
+
+    @PutMapping("/{id}")
+    public Performance updatePerformance(@PathVariable Long id, @RequestBody Performance updatedPerformance) {
+        return performanceService.updatePerformance(id, updatedPerformance);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deletePerformance(@PathVariable Long id) {
+        performanceService.deletePerformance(id);
+        return "Performance deleted successfully!";
+    }
 }
+

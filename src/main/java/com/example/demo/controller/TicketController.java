@@ -18,7 +18,7 @@ import com.example.demo.service.TicketService;
 
 @RestController
 @RequestMapping("/tickets")
-public class TicketController {
+/*public class TicketController {
     @Autowired
     private TicketService ticketService;
 
@@ -40,6 +40,37 @@ public class TicketController {
     @PostMapping
     public Ticket createTicket(@RequestBody Ticket ticket) {
         return ticketService.createTicket(ticket);
+    }
+
+    @PutMapping("/{id}")
+    public Ticket updateTicket(@PathVariable Long id, @RequestBody Ticket ticket) {
+        return ticketService.updateTicket(id, ticket);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteTicket(@PathVariable Long id) {
+        ticketService.deleteTicket(id);
+        return "Ticket deleted successfully!";
+    }
+}
+*/
+public class TicketController {
+    @Autowired
+    private TicketService ticketService;
+
+    @GetMapping
+    public List<Ticket> getAllTickets() {
+        return ticketService.getAllTickets();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Ticket> getTicketById(@PathVariable Long id) {
+        return ticketService.getTicketById(id);
+    }
+
+    @PostMapping("/user/{userId}")
+    public Ticket createTicket(@PathVariable Long userId, @RequestBody Ticket ticket) {
+        return ticketService.createTicket(userId, ticket);
     }
 
     @PutMapping("/{id}")

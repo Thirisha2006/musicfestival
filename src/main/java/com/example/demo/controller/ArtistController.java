@@ -33,7 +33,7 @@ public class ArtistController {
         return artistService.getArtistById(id);
     }
 
-    @PostMapping
+    @PostMapping("/posting")
     public Artist createArtist(@RequestBody Artist artist) {
         return artistService.createArtist(artist);
     }
@@ -52,7 +52,7 @@ public class ArtistController {
     @GetMapping("/page")
     public Page<Artist> getArtistsByPage(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size) {
+            @RequestParam(defaultValue = "3") int size) {
         return artistService.getArtistsByPage(page, size);
     }
 

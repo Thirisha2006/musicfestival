@@ -1,4 +1,4 @@
-package com.example.demo.service;
+/*package com.example.demo.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,4 +56,56 @@ public class PerformancceService {
     }
     
     
+}
+*/
+
+
+package com.example.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
+import com.example.demo.entity.Performance;
+import com.example.demo.entity.Artist;
+import com.example.demo.repository.PerformanceRepository;
+import com.example.demo.repository.ArtistRepository;
+
+@Service
+public class PerformanceService {
+    @Autowired
+    private PerformanceRepository performanceRepository;
+
+    @Autowired
+    private ArtistRepository artistRepository;
+
+    public List<Performance> getAllPerformances() {
+        return performanceRepository.findAll();
+    }
+
+    public Performance getPerformanceById(Long id) {
+        return performanceRepository.findById(id).orElse(null);
+    }
+
+    public Performance createPerformance(Performance performance, Long artistId) {
+        Optional<Artist> artist = artistRepository.findById(artistId);
+        if (artist.isPresent()) {
+            performance.setArtist(artist.get());
+            return performanceRepository.save(performance);
+        } else {
+            throw new RuntimeException("Artist not found with ID: " + artistId);
+        }
+    }
+
+    public Performance updatePerformance(Long id, Performance updatedPerformance) {
+        if (performanceRepository.existsById(id)) {
+            updatedPerformance.setId(id);
+            return performanceRepository.save(updatedPerformance);
+        }
+        return null;
+    }
+
+    public void deletePerformance(Long id) {
+        performanceRepository.deleteById(id);
+    }
 }

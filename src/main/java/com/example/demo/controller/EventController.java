@@ -64,3 +64,4 @@ public class EventController {
         return eventService.sortByEventName();
     }
 }
+
